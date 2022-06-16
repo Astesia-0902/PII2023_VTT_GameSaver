@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="chatControl.js" defer></script>
+    <style>
+        body {
+            margin: 0;
+        }
+        
+        #containerLogin {
+            width: 314px;
+        }
+        
+        .content {
+            display: flex;
+        }
+        
+        #separator {
+            width: 100vh;
+            height: 100vh;
+        }
+        
+        .forms {
+            width: 300px;
+            height: 300px;
+            border: solid 1px black;
+            margin: 40px;
+            padding: 10px;
+        }
+        
+        .colors {
+            background-color: #222222;
+            background-color: #FFFFFF;
+            background-color: #4B4E6D;
+            background-color: #84DCC6;
+            background-color: #95A3B3;
+        }
+        
+        .parent {
+            display: grid;
+            grid-template-columns: 0.5fr repeat(3, 1fr) 0.5fr;
+            grid-template-rows: repeat(5, 0.5fr);
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+            height: 900px;
+        }
+        
+        .div1 {
+            grid-area: 1 / 1 / 6 / 2;
+            width: 250px;
+            background-color: #4B4E6D;
+        }
+        
+        .div2 {
+            grid-area: 1 / 2 / 6 / 5;
+            background-color: #95A3B3;
+            width: 1400px;
+            display: flex;
+        }
+        
+        .leftboard {
+            width: 5%;
+            height: 500px;
+        }
+        
+        .rightboard {
+            width: 5%;
+            height: 500px;
+        }
+        
+        .gameboard {
+            display: flex;
+            flex-flow: wrap;
+            position: relative;
+            top: 100px;
+            width: 1820px;
+            height: 650px;
+            overflow: hidden;
+        }
+        
+        .squaretile {
+            border: solid 1px black;
+            box-sizing: border-box;
+            display: flex;
+            place-content: center;
+            align-items: center;
+            left: 50%;
+            top: 50%;
+        }
+        
+        .squaretile:hover {
+            border: solid 1px black;
+        }
+        
+        .draggable {
+            background-color: #84DCC6;
+            border-radius: 50%;
+        }
+        
+        .draggable.dragging {
+            background-color: #95A3B3;
+        }
+        
+        #profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        #profileIcon {
+            margin: 20px;
+            border: solid 1px black;
+            height: 60px;
+            width: 60px;
+        }
+        
+        #profileNick {
+            border: solid 1px black;
+            width: 130px;
+        }
+        
+        .partyMember {
+            display: flex;
+            align-items: center;
+        }
+        
+        .partyMemberIcon {
+            margin: 20px;
+            border: solid 1px black;
+            height: 40px;
+            width: 40px;
+        }
+        
+        .partyMemberNick {
+            width: 130px;
+            border: solid 1px black;
+        }
+        
+        .chatContainer {
+            position: absolute;
+            bottom: 40px;
+            margin: 7px;
+            background-color: #FFFFFF;
+        }
+        
+        #chatHistory {
+            margin: 5px;
+            height: 400px;
+            width: 223px;
+            border: solid 1px black;
+            overflow-y: scroll;
+        }
+        
+        #chatHistory::-webkit-scrollbar {
+            opacity: 0;
+        }
+        
+        #partyList {
+            height: 320px;
+            overflow-y: scroll;
+        }
+        
+        #partyList::-webkit-scrollbar {
+            opacity: 0;
+            width: 0px;
+        }
+        
+        .inputField {
+            margin: 5px;
+        }
+        
+        .div3 {
+            grid-area: 1 / 5 / 6 / 6;
+            width: 250px;
+            background-color: #4B4E6D;
+            display: flex;
+            justify-content: center;
+        }
+        
+        #masterCommands {
+            display: flex;
+            flex-wrap: wrap;
+            place-content: center;
+            justify-content: center;
+            width: 225px;
+            height: 140px;
+            background-color: #222222;
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+        
+        #masterCommands input {
+            margin: 5px;
+            width: 120px;
+        }
+        
+        .tokenContainer {
+            position: absolute;
+            bottom: 40px;
+            border-radius: 75px;
+            height: 380px;
+            width: auto;
+            padding: 30px;
+            justify-content: center;
+            align-items: center;
+            background-color: #222222;
+            overflow-y: scroll;
+        }
+        
+        #tokenContainer::-webkit-scrollbar {
+            opacity: 0;
+            width: 0px;
+        }
+        
+        .tokenContainer .draggable:not(.draggable:last-child) {
+            border: none;
+            margin-bottom: 10px;
+        }
+        
+        #addToken {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 260px;
+            width: 60px;
+            height: 60px;
+            background-color: #95A3B3;
+        }
+        
+        #trashToken {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 340px;
+            width: 60px;
+            height: 60px;
+            background-color: #95A3B3;
+        }
+        
+        .backgroundChanger {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            position: absolute;
+            top: 200px;
+            height: 60px;
+            width: 195px;
+            border-radius: 20px;
+            background-color: #222222;
+        }
+        
+        .backgroundChanger input {
+            margin: 3px;
+            width: 120px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+
+
+        <div id="separator" style="z-index: 0;"></div>
+        <div id="containerGame" style="z-index: -1; opacity: 0; position: absolute">
+            <div class="parent">
+                <div class="div1">
+                    <div id="profile">
+                        <div id="profileIcon">
+
+                        </div>
+                        <div id="profileNick">
+                            My nickname!
+                        </div>
+                    </div>
+                    <div id="partyList">
+
+                    </div>
+                    <div class="chatContainer">
+                        <div id="chatHistory">
+                            <div style="color: gray;">
+                                Diceroll example: /d20 + 4
+                            </div>
+                            <div style="color: gray;">
+                                Diceroll example: /D6 - 1
+                            </div>
+                        </div>
+                        <div class="inputField">
+                            <input type="text" id="textField">
+                            <input type="submit" id="sendText" value="send">
+                        </div>
+                    </div>
+                </div>
+                <div class="div2">
+                    <div class="leftboard">
+
+                    </div>
+                    <img src="https://drive.google.com/uc?id=1BikKIYHCBekWwzU1u8ydPy2629mFH_1j" id="backgroundImage" style="height:650px; width:1300px; position: absolute; top: 100px; left: 300px;">
+                    <div class="gameboard">
+
+                    </div>
+                    <div class="rightboard">
+
+                    </div>
+                </div>
+                <div class="div3">
+                    <div id="masterCommands" style="opacity: 0;">
+                        <input type="button" id="small" value="small">
+                        <input type="button" id="medium" value="medium">
+                        <input type="button" id="large" value="large">
+                        <input type="button" id="mHexa" value="hexagon">
+                    </div>
+                    <div class="backgroundChanger">
+                        <input type="text" id="urlInput" placeholder="Insert image url..." style="width: 150px;">
+                        <input type="button" id="urlSubmitBg" value="new Background">
+                        <input type="button" id="urlSubmitToken" value="new Token">
+                    </div>
+
+                    <div id="trashToken">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" style="height: 40px; width:40px;">
+                    </div>
+
+                    <div class="tokenContainer" id="tokenContainer">
+
+                    </div>
+
+
+                </div>
+            </div>
+            <a href="https://drive.google.com/drive" target="_blank">Load your images here to get their direct link</a>
+            <div id="roomInfo"></div>
+        </div>
+
+        <div id="containerLogin" style="z-index: 1; opacity: 1; position: absolute;">
+            <div class="forms">
+                <div>
+                    Create game
+                </div>
+                <hr> nickname <br>
+                <input type="text" id="createNick">
+                <hr> room Password <br>
+                <input type="text" id="createPW">
+                <hr>
+                <input type="submit" id="submitCreate">
+                <hr>
+                <div id="report"></div>
+            </div>
+            <div class="forms">
+                <div>
+                    Join game
+                </div>
+                <hr> nickname <br>
+                <input type="text" id="joinNick">
+                <hr> room ID <br>
+                <input type="number" id="roomID">
+                <hr> room Password <br>
+                <input type="text" id="roomPW">
+                <hr>
+                <input type="submit" id="submitJoin">
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const driveport = "https://drive.google.com/uc?id=";
+
+    const getDrivePic = (shareLink) => {
+        let split1;
+        let split2;
+        if (shareLink != undefined) {
+            split1 = shareLink.split("/d/");
+        } else return "invalidURL"
+        if (split1[1] != undefined) {
+            split2 = split1[1].split("/view?");
+        } else return "invalidURL"
+
+        return split2[0];
+    }
+
+    const ws = new WebSocket("ws:localhost:3000/");
+
+    const report = document.getElementById("report");
+
+    const createNick = document.getElementById("createNick");
+    const createPW = document.getElementById("createPW");
+    const submitCreate = document.getElementById("submitCreate");
+
+    const joinNick = document.getElementById("joinNick");
+    const roomID = document.getElementById("roomID");
+    const roomPW = document.getElementById("roomPW");
+    const submitJoin = document.getElementById("submitJoin");
+
+    const profileNick = document.getElementById("profileNick");
+    const roomInfo = document.getElementById("roomInfo");
+
+    const masterCommands = document.getElementById("masterCommands");
+    const setProfile = (pack) => {
+        masterCommands.style.opacity = 1;
+        profileNick.innerText = createNick.value;
+        roomInfo.innerHTML = "Room ID: " + pack[1] + ", " + pack[2];
+    }
+    const setProfileGuest = (pack) => {
+        profileNick.innerText = joinNick.value;
+        roomInfo.innerHTML = "Room ID: " + pack[1] + ", " + pack[2];
+    }
+    const partyList = document.getElementById("partyList");
+
+    const addPartyMember = (pack) => {
+        let partyMember = document.createElement("div");
+        partyMember.className = "partyMember";
+        partyMember.value = pack;
+        let partyMemberIcon = document.createElement("div");
+        partyMemberIcon.className = "partyMemberIcon";
+        partyMemberIcon.value = 0;
+        partyMemberIcon.style.backgroundImage = "url(" + tokenArray[partyMemberIcon.value] + ")"
+        partyMemberIcon.style.backgroundSize = "40px 40px";
+        let partyMemberIconValue = partyMemberIcon.value;
+        partyMemberIcon.addEventListener("click", () => {
+            console.log(profileIcon.value, partyMemberIconValue)
+            if (partyMemberIconValue + 2 <= 7) {
+                partyMemberIconValue++;
+                partyMemberIcon.style.backgroundImage = "url(" + tokenArray[partyMemberIconValue] + ")";
+
+            } else {
+                partyMemberIconValue = 0
+                partyMemberIcon.style.backgroundImage = "url(" + tokenArray[partyMemberIconValue] + ")";
+
+            }
+        });
+
+        let partyMemberNick = document.createElement("div");
+        partyMemberNick.className = "partyMemberNick";
+        partyMemberNick.innerText = pack;
+        partyMember.append(partyMemberIcon);
+        partyMember.append(partyMemberNick);
+        partyList.append(partyMember);
+    }
+
+
+
+    const placeText = (pack) => {
+        let text = document.createElement("div");
+        let regex = /rolled/;
+        if (regex.test(pack)) {
+            text.style.color = "red";
+        }
+        let fullText = "";
+        if (pack.length > 2) {
+            for (let i = 2; i < pack.length; i++) {
+                if (i === pack.length - 1) {
+                    fullText = fullText + pack[i];
+                } else {
+                    fullText = fullText + pack[i] + ", ";
+                }
+            }
+        } else {
+            fullText = pack[1];
+        }
+        text.innerText = "[" + pack[1] + "]: " + fullText;
+        chatHistory.append(text);
+    }
+
+    let horizontalTiles = 10;
+    ws.addEventListener("message", e => {
+        const pack = e.data.toString().split(",");
+        console.log(pack)
+        switch (pack[0]) {
+            case "notifyCreate":
+                showGame();
+                setProfile(pack);
+                report.innerText = pack;
+                break;
+            case "notifyJoin":
+                addPartyMember(pack[1]);
+                report.innerText = pack;
+                break;
+            case "startGuest":
+                showGame();
+
+                setProfileGuest(pack);
+                if (pack.length > 3) {
+                    for (let i = 3; i < pack.length; i++) {
+                        addPartyMember(pack[i])
+                    }
+                } else {
+                    addPartyMember(pack[3])
+                }
+
+                break;
+            case "notifyQuit":
+                for (let i = 0; i < partyList.childElementCount; i++) {
+                    let quitMember = partyList.children[i];
+                    if (quitMember.value === pack[1]) quitMember.remove();
+                }
+                break;
+            case "notifyText":
+                placeText(pack);
+                break;
+            case "notifyChangeSize":
+                switch (pack[1]) {
+                    case "L":
+                        largeFun();
+                        break;
+                    case "M":
+                        mediumFun();
+                        break;
+                    case "H":
+                        hexaFun();
+                        break;
+                    case "S":
+                        smallFun();
+                        break;
+                }
+                break;
+            case "notifyPlaceToken":
+                let givenTilePos = 1;
+                if (horizontalTiles != "Hexa") {
+                    givenTilePos = (parseInt(pack[1]) * horizontalTiles) + parseInt(pack[2]);
+
+                } else {
+                    for (let i = 0; i < parseInt(pack[1]); i++) {
+                        if (i % 2 == 0) {
+                            givenTilePos = givenTilePos + 20;
+                        } else {
+                            givenTilePos = givenTilePos + 21;
+                        }
+                    }
+                    givenTilePos = givenTilePos + parseInt(pack[2])
+                }
+                let givenTile = gameboard.children[givenTilePos];
+                if (pack.length > 5) {
+
+                    let prevPos = 1;
+                    if (horizontalTiles != "Hexa") {
+                        prevPos = (parseInt(pack[4]) * horizontalTiles) + parseInt(pack[5]);
+
+                    } else {
+                        for (let i = 0; i < parseInt(pack[4]); i++) {
+                            if (i % 2 == 0) {
+                                prevPos = prevPos + 20;
+                            } else {
+                                prevPos = prevPos + 21;
+                            }
+                        }
+                        prevPos = prevPos + parseInt(pack[5])
+                    }
+
+
+                    gameboard.children[prevPos].children[0].remove();
+                }
+
+                let givenTokenPos = pack[3];
+                let givenToken = tokencontainer.children[givenTokenPos];
+
+                givenTile.append(givenToken);
+
+                refreshToken();
+                break;
+            case "notifyRemoveToken":
+                let j = parseInt(pack[1]);
+                let i = parseInt(pack[2]);
+                let pos = 0;
+                if (horizontalTiles === "Hexa") {
+                    for (let k = 0; k < j; k++) {
+                        if (k % 2 == 0) {
+                            pos = pos + 20;
+                        } else {
+                            pos = pos + 21;
+                        }
+                    }
+                    pos = pos + i + 1;
+                } else {
+                    pos = (j * horizontalTiles) + i;
+                }
+                gameboard.children[pos].children[0].remove();
+                break;
+            case "notifyNewBG":
+                backgroundImage.src = pack[1];
+                break;
+            case "notifyNewToken":
+                updateTokens(pack[1]);
+                2
+                break;
+            case "wrongPW":
+                break;
+            case "notExist":
+                break;
+            case "nickUnavailable":
+                break;
+            default:
+                break;
+        }
+    });
+
+    const urlSubmitBg = document.getElementById("urlSubmitBg");
+    const urlSubmitToken = document.getElementById("urlSubmitToken");
+
+    const urlInput = document.getElementById("urlInput");
+
+    const backgroundImage = document.getElementById("backgroundImage");
+
+    urlSubmitBg.addEventListener("click", () => {
+        if (urlInput.value != "") {
+            let imgID = getDrivePic(urlInput.value);
+            if (imgID == "invalidURL") {
+                urlInput.value = "invalid URL";
+            } else {
+                backgroundImage.src = "https://drive.google.com/uc?id=" + imgID;
+                let pack = ["newBG", backgroundImage.src]
+                ws.send(pack);
+                urlInput.value = "";
+            }
+        }
+    })
+
+    urlSubmitToken.addEventListener("click", () => {
+        if (urlInput.value != "") {
+            let imgID = getDrivePic(urlInput.value);
+            if (imgID == "invalidURL") {
+                urlInput.value = "invalid URL";
+            } else {
+                updateTokens("https://drive.google.com/uc?id=" + imgID)
+                let pack = ["newToken", "https://drive.google.com/uc?id=" + imgID]
+                ws.send(pack);
+                urlInput.value = "";
+            }
+        }
+    })
+
+
+
+    submitCreate.addEventListener("click", () => {
+        let nick = createNick.value;
+        let pw = createPW.value;
+
+        const pack = ["create", nick, pw];
+        ws.send(pack)
+
+    });
+
+    submitJoin.addEventListener("click", () => {
+
+        let nick = joinNick.value;
+        let rID = roomID.value;
+        let rPW = roomPW.value;
+
+        const pack = ["join", nick, rID, rPW];
+        ws.send(pack)
+
+    })
+
+    const smallcheck = document.getElementById("small");
+    const mediumcheck = document.getElementById("medium");
+    const largecheck = document.getElementById("large");
+
+    const mediumhexa = document.getElementById("mHexa");
+
+    const gameboard = document.getElementsByClassName("gameboard")[0];
+
+    var tokenSize = "65px";
+
+    const largeFun = () => {
+        generate(10, 5, 130);
+        horizontalTiles = 10;
+        tokenSize = "80px";
+        refreshToken();
+    }
+    largecheck.addEventListener("click", () => {
+        largeFun()
+        const pack = ["changeSize", "L"];
+        ws.send(pack)
+    });
+    const mediumFun = () => {
+        generate(20, 10, 65);
+        tokenSize = "65px";
+        horizontalTiles = 20;
+        refreshToken();
+    }
+    mediumcheck.addEventListener("click", () => {
+        mediumFun()
+        const pack = ["changeSize", "M"];
+        ws.send(pack)
+
+    });
+    const hexaFun = () => {
+        generatehexa(20, 12, 65);
+        horizontalTiles = "Hexa";
+        tokenSize = "55px";
+        refreshToken();
+    }
+
+    mediumhexa.addEventListener("click", () => {
+        const pack = ["changeSize", "H"];
+        ws.send(pack)
+
+    });
+    const smallFun = () => {
+        horizontalTiles = 40;
+        generate(40, 20, 32.5);
+        tokenSize = "32.5px";
+        refreshToken();
+    }
+
+    smallcheck.addEventListener("click", () => {
+        const pack = ["changeSize", "S"];
+        ws.send(pack)
+
+    });
+
+
+
+    const generate = (x, y, size) => {
+        cleargrid();
+        for (let i = 0; i < y; i++) {
+            for (let j = 0; j < x; j++) {
+                let tile = document.createElement("div");
+                tile.className = "squaretile";
+                tile.style.width = size + "px";
+                tile.style.height = size + "px";
+                tile.value = i + "," + j;
+
+                gameboard.append(tile);
+            }
+        }
+        generateDragOn();
+    }
+
+    const generatehexa = (x, y, size) => {
+        cleargrid();
+        //                <object data="Untitled (3).svg" width="65  " height="75.08"> </object>
+        let hexagrid = document.createElement("img");
+        hexagrid.src = "newgridd.png";
+        hexagrid.style.width = "1800px";
+        hexagrid.style.position = "absolute";
+        hexagrid.style.left = "-55px"
+        hexagrid.style.top = "-26px"
+
+        //hexagrid.style.height = "650px"
+        gameboard.append(hexagrid);
+        // gameboard.className = "gameboardhexa";
+
+        for (let i = 0; i < y; i++) {
+            for (let j = 0; j < x + (i % 2); j++) {
+                let tile = document.createElement("div");
+
+                //let hexa = document.createElement("object");
+                //hexa.data = "Untitled (3).svg";
+                //hexa.width = "65";
+                //hexa.height = "75.08";
+                //hexa.style.zIndex = "-1";
+                tile.style.zIndex = "1";
+                tile.className = "squaretile";
+                tile.style.width = size + "px";
+                tile.style.height = (size - 7) + "px";
+                tile.style.position = "absolute";
+                tile.style.left = ((65 * j)) + "px";
+                tile.style.border = "none";
+                tile.value = i + "," + j;
+                //tile.append(hexa);
+
+                if (i % 2 != 0) {
+
+                    tile.style.left = ((65 * j) - (65 / 2)) + "px";
+                }
+                tile.style.top = (65 * i) - (9 * i) + "px";
+
+                gameboard.append(tile);
+            }
+
+        }
+        generateDragOn();
+    };
+
+    const cleargrid = () => {
+        while (gameboard.childElementCount > 0) {
+            gameboard.lastChild.remove();
+        }
+    }
+
+    const tokenArray = new Array();
+    const initiateTokens = () => {
+        tokenArray.push("https://drive.google.com/uc?id=1K8IdZ-9N-ynnzOR7bvJEh2-hrfQLj-KK");
+        tokenArray.push("https://drive.google.com/uc?id=1LnoHwDIkIcOR5paBDz91i9s_qNuZYLmD");
+        tokenArray.push("https://drive.google.com/uc?id=1-84BnDUYGnXIFIiB_vySpFJ19aAP9_nm");
+        tokenArray.push("https://drive.google.com/uc?id=1L7b5ViZB8vhLVeBZ3qq3UVnrVfnjPDHb");
+        tokenArray.push("https://drive.google.com/uc?id=1-wh24tij2xAOBcTwpTsAmZFj6E591W2a");
+        tokenArray.push("https://drive.google.com/uc?id=1rfjEUXtc9LXXlaIlL8sRYBWDP6nrB0Vw");
+        tokenArray.push("https://drive.google.com/uc?id=1_5uEoyQ32-a236YWWX7QC-aKr5sbjabG");
+    }
+
+    initiateTokens();
+
+    const updateTokens = (value) => {
+        tokenArray.push(value);
+        refreshToken();
+    }
+
+    const tokencontainer = document.getElementById("tokenContainer");
+
+    const refreshToken = () => {
+
+        while (tokencontainer.childElementCount > 0) {
+            tokencontainer.firstChild.remove();
+        }
+        let tokenid = 0;
+        tokenArray.forEach((value) => {
+            let token = document.createElement("div");
+            token.className = "draggable";
+            token.style.height = tokenSize;
+            token.style.width = tokenSize;
+            token.draggable = "true";
+            token.value = tokenid;
+            token.style.backgroundSize = tokenSize + " " + tokenSize;
+            token.style.backgroundImage = "url(" + value + ")";
+
+            tokencontainer.append(token);
+            tokenid++;
+            token.addEventListener('dragstart', () => {
+                token.classList.add('dragging')
+                if (token.parentNode.className === "squaretile") {
+                    currentTokenPlace = token.parentNode.value;
+                } else {
+                    currentTokenPlace = null;
+                }
+            })
+
+            token.addEventListener('dragend', () => {
+                token.classList.remove('dragging')
+                refreshToken();
+            })
+        });
+    }
+
+    refreshToken();
+
+    const trashToken = document.getElementById("trashToken");
+    var currentTokenPlace;
+    trashToken.addEventListener('dragover', e => {
+        e.preventDefault()
+
+    })
+    trashToken.addEventListener('drop', e => {
+        e.preventDefault()
+        const draggable = document.querySelector('.dragging')
+        ws.send(["removeToken", draggable.parentNode.value])
+
+        draggable.remove();
+    })
+
+    const generateDragOn = () => {
+        const containers = document.querySelectorAll('.squaretile')
+
+        containers.forEach(container => {
+            container.addEventListener('dragover', e => {
+                e.preventDefault()
+            })
+        })
+        containers.forEach(container => {
+            container.addEventListener('drop', e => {
+                e.preventDefault()
+                const draggable = document.querySelector('.dragging')
+                if (container.children.length < 1) {
+                    container.appendChild(draggable)
+                    let pack = ["placeToken", container.value, draggable.value, currentTokenPlace]
+                    ws.send(pack)
+
+                }
+
+            })
+        })
+    }
+    const profileIcon = document.getElementById("profileIcon");
+
+    profileIcon.value = 0;
+    let profileIconValue = profileIcon.value;
+    profileIcon.style.backgroundImage = "url(" + tokenArray[profileIconValue] + ")";
+    profileIcon.style.backgroundSize = "60px 60px";
+
+
+
+
+    profileIcon.addEventListener("click", () => {
+        if (profileIconValue + 2 <= 7) {
+            profileIconValue++;
+
+            profileIcon.style.backgroundImage = "url(" + tokenArray[profileIconValue] + ")";
+        } else {
+            profileIconValue = 0
+            profileIcon.style.backgroundImage = "url(" + tokenArray[profileIconValue] + ")";
+
+        }
+    });
+
+    const loginContainer = document.getElementById("containerLogin");
+    const gameContainer = document.getElementById("containerGame");
+    const separator = document.getElementById("separator");
+
+    const hideall = () => {
+        loginContainer.style.opacity = 0;
+        gameContainer.style.opacity = 0;
+
+
+        loginContainer.style.zIndex = -1;
+        gameContainer.style.zIndex = -1;
+
+    }
+
+    const showGame = () => {
+        hideall();
+        gameContainer.style.opacity = 1;
+        gameContainer.style.zIndex = 1;
+
+    }
+
+    const showLogin = () => {
+            hideall();
+
+            loginContainer.style.opacity = 1;
+            loginContainer.style.zIndex = 1;
+
+        }
+        //showGame();
+</script>
+
+</html>
