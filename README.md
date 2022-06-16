@@ -15,6 +15,10 @@ Possible upgrades:
 - game saver
 - improved graphics
 
+## Example video
+here's a little showcase:
+https://drive.google.com/uc?id=1ZmxAEsN0qVgDn-Y306d0bOvA3AOh4PAZ
+
 ## How to play
 Create a game and use the given room id (see bottom left of the screen) to let people join your room.
 After everybody has joined the creator of the room gets to decide the grid type.
