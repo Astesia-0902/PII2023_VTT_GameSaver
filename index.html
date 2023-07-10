@@ -551,7 +551,6 @@
                 }
                 break;
             case "notifyPlaceToken":
-                //TODO:
                 let tokenID = -1;
                 if (pack.length <= 5) {
                     tokenID = tokenInfoList.size;
@@ -559,12 +558,12 @@
                 }
 
                 let givenTilePos = 1;
-                if (horizontalTiles != "Hexa") {
+                if (horizontalTiles !== "Hexa") {
                     givenTilePos = (parseInt(pack[1]) * horizontalTiles) + parseInt(pack[2]);
 
                 } else {
                     for (let i = 0; i < parseInt(pack[1]); i++) {
-                        if (i % 2 == 0) {
+                        if (i % 2 === 0) {
                             givenTilePos = givenTilePos + 20;
                         } else {
                             givenTilePos = givenTilePos + 21;
@@ -591,17 +590,23 @@
                     }
 
                     //Find the token according to the given position
-                    let tokenIndex;
+                    let tokenIndex = -1;
                     tokenInfoList.forEach((value, key) => {
-                        if (value.tokenPositionX === pack[4] && value.tokenPositionY === pack[5]) {
+                        if (value.tokenPositionX === Number(pack[4]) && value.tokenPositionY === Number(pack[5])) {
                             tokenIndex = key;
                         }
                     });
+
+                    if (tokenIndex === -1) {
+                        console.log("Token not found");
+                        return;
+                    }
+
                     tokenID = tokenIndex;
                     //Change the token position in the list
                     let tokenInfo = tokenInfoList.get(tokenIndex);
-                    tokenInfo.tokenPositionX = pack[1];
-                    tokenInfo.tokenPositionY = pack[2];
+                    tokenInfo.tokenPositionX = Number(pack[1]);
+                    tokenInfo.tokenPositionY = Number(pack[2]);
 
                     gameboard.children[prevPos].children[0].remove();
                 }
@@ -615,13 +620,12 @@
                 refreshToken();
                 break;
             case "notifyRemoveToken":
-                //TODO:
                 let j = parseInt(pack[1]);//row
                 let i = parseInt(pack[2]);//column
                 let pos = 0;
                 if (horizontalTiles === "Hexa") {
                     for (let k = 0; k < j; k++) {
-                        if (k % 2 == 0) {
+                        if (k % 2 === 0) {
                             pos = pos + 20;
                         } else {
                             pos = pos + 21;
@@ -633,10 +637,16 @@
                 }
                 let tokenIndex = -1;
                 tokenInfoList.forEach((value, key) => {
-                    if (value.tokenPositionX === pack[1] && value.tokenPositionY === pack[2]) {
+                    if (value.tokenPositionX === Number(pack[1]) && value.tokenPositionY === Number(pack[2])) {
                         tokenIndex = key;
                     }
                 });
+
+                if (tokenIndex === -1) {
+                    console.log("Token not found");
+                    return;
+                }
+
                 tokenInfoList.delete(tokenIndex);
                 gameboard.children[pos].children[0].remove();
                 break;
@@ -670,9 +680,9 @@
     const backgroundImage = document.getElementById("backgroundImage");
 
     urlSubmitBg.addEventListener("click", () => {
-        if (urlInput.value != "") {
+        if (urlInput.value !== "") {
             let imgID = getDrivePic(urlInput.value);
-            if (imgID == "invalidURL") {
+            if (imgID === "invalidURL") {
                 urlInput.value = "invalid URL";
             } else {
                 currentBackgroundUrl = "https://drive.google.com/uc?id=" + imgID;
@@ -685,9 +695,9 @@
     })
 
     urlSubmitToken.addEventListener("click", () => {
-        if (urlInput.value != "") {
+        if (urlInput.value !== "") {
             let imgID = getDrivePic(urlInput.value);
-            if (imgID == "invalidURL") {
+            if (imgID === "invalidURL") {
                 urlInput.value = "invalid URL";
             } else {
                 updateTokens("https://drive.google.com/uc?id=" + imgID)
@@ -1024,7 +1034,6 @@
     });
 
     const saveGame = () => {
-        //TODO:elaborate game save
         let saveData = new SaveData(tokenArray, tokenInfoList, currentGrid, currentBackgroundUrl);
         let jsonString = JSON.stringify(saveData, replacer);
         let blob = new Blob([jsonString], {type: "application/json"});
@@ -1066,11 +1075,15 @@
         fileReader.readAsText(savedFile);
         fileReader.onload = (event) => {
             let jsonString = event.target.result.toString();
-            let saveData = JSON.parse(jsonString, reviver);
+            let saveData;
+            try {
+                saveData = JSON.parse(jsonString, reviver);
+            } catch (e) {
+                alert("Invalid save file");
+                return;
+            }
             rebuildGame(saveData);
         }
-        //TODO: read save data
-        //TODO: clear the board before loading
     }
 
     /**
@@ -1095,6 +1108,10 @@
     }
 
     function rebuildGame(saveData) {
+        if (saveData == null) {
+            alert("Invalid save file");
+            return;
+        }
         let tokenInfoMap = saveData.tokenInfoList;
         let tokenArray = saveData.tokenArray;
         let gridFormat = saveData.gridFormat;
@@ -1109,18 +1126,22 @@
     }
 
     function rebuildTokenPos(tokenInfoMap) {
+        if (tokenInfoMap == null) {
+            console.log("No token info map");
+            return;
+        }
         tokenInfoList = tokenInfoMap;
         tokenInfoList.forEach((value, key) => {
             let x = Number(value.tokenPositionX);
             let y = Number(value.tokenPositionY);
 
             let givenTilePos = 1;
-            if (horizontalTiles != "Hexa") {
+            if (horizontalTiles !== "Hexa") {
                 givenTilePos = (x * horizontalTiles) + y;
 
             } else {
                 for (let i = 0; i < x; i++) {
-                    if (i % 2 == 0) {
+                    if (i % 2 === 0) {
                         givenTilePos = givenTilePos + 20;
                     } else {
                         givenTilePos = givenTilePos + 21;
@@ -1150,6 +1171,10 @@
     }
 
     function rebuildTokenArray(newTokenArray) {
+        if (newTokenArray.length < 7) {
+            console.log("Invalid save file: not enough tokens");
+            return;
+        }
         tokenArray.splice(7, tokenArray.length);
         for (let i = 7; i < newTokenArray.length; i++) {
             updateTokenWithOriginalURL(newTokenArray[i]);
@@ -1159,16 +1184,19 @@
     }
 
     function updateTokenWithOriginalURL(url) {
-        if (url != "") {
+        if (url !== "") {
             updateTokens(url)
             let pack = ["newToken", url]
             ws.send(pack);
+        } else {
+            console.log("url invalid")
         }
     }
 
     function updateBGWithOriginalURL(url) {
-        if (url === "")
-            return;
+        if (url === "") {
+            console.log("url invalid")
+        }
         currentBackgroundUrl = url;
         backgroundImage.src = url;
         let pack = ["newBG", backgroundImage.src]
@@ -1177,6 +1205,10 @@
     }
 
     function updateGrid(grid) {
+        if (grid === "") {
+            console.log("grid invalid")
+            return;
+        }
         let pack;
         switch (grid) {
             case "L":
@@ -1199,6 +1231,8 @@
                 pack = ["changeSize", "S"];
                 ws.send(pack);
                 break;
+            default:
+                console.log("Invalid grid format");
         }
     }
 

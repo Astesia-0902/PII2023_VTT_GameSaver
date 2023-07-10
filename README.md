@@ -1,4 +1,5 @@
 # Progetto di Ingegneria Informatica 2022
+## Curà Alessandro - Politecnico di Milano
 ## Virtual TableTop - VTT
 
 Online tabletop simulator.
@@ -8,10 +9,10 @@ Current features:
 - customizable tokens
 - 4 availble grids to choose
 - chat and dice rolls
-- game saver
 
 Possible upgrades:
 - personal tokens
+- game saver
 - improved graphics
 
 ## Example video
