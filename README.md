@@ -9,10 +9,10 @@ Current features:
 - customizable tokens
 - 4 availble grids to choose
 - chat and dice rolls
+- game saver
 
 Possible upgrades:
 - personal tokens
-- game saver
 - improved graphics
 
 ## Example video
