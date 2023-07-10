@@ -1,5 +1,4 @@
 # Progetto di Ingegneria Informatica 2022
-## Curà Alessandro - Politecnico di Milano
 ## Virtual TableTop - VTT
 
 Online tabletop simulator.
