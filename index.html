@@ -11,20 +11,20 @@
         body {
             margin: 0;
         }
-        
+
         #containerLogin {
             width: 314px;
         }
-        
+
         .content {
             display: flex;
         }
-        
+
         #separator {
             width: 100vh;
             height: 100vh;
         }
-        
+
         .forms {
             width: 300px;
             height: 300px;
@@ -32,7 +32,7 @@
             margin: 40px;
             padding: 10px;
         }
-        
+
         .colors {
             background-color: #222222;
             background-color: #FFFFFF;
@@ -40,7 +40,7 @@
             background-color: #84DCC6;
             background-color: #95A3B3;
         }
-        
+
         .parent {
             display: grid;
             grid-template-columns: 0.5fr repeat(3, 1fr) 0.5fr;
@@ -49,30 +49,30 @@
             grid-row-gap: 0px;
             height: 900px;
         }
-        
+
         .div1 {
             grid-area: 1 / 1 / 6 / 2;
             width: 250px;
             background-color: #4B4E6D;
         }
-        
+
         .div2 {
             grid-area: 1 / 2 / 6 / 5;
             background-color: #95A3B3;
             width: 1400px;
             display: flex;
         }
-        
+
         .leftboard {
             width: 5%;
             height: 500px;
         }
-        
+
         .rightboard {
             width: 5%;
             height: 500px;
         }
-        
+
         .gameboard {
             display: flex;
             flex-flow: wrap;
@@ -82,7 +82,7 @@
             height: 650px;
             overflow: hidden;
         }
-        
+
         .squaretile {
             border: solid 1px black;
             box-sizing: border-box;
@@ -92,61 +92,61 @@
             left: 50%;
             top: 50%;
         }
-        
+
         .squaretile:hover {
             border: solid 1px black;
         }
-        
+
         .draggable {
             background-color: #84DCC6;
             border-radius: 50%;
         }
-        
+
         .draggable.dragging {
             background-color: #95A3B3;
         }
-        
+
         #profile {
             display: flex;
             align-items: center;
         }
-        
+
         #profileIcon {
             margin: 20px;
             border: solid 1px black;
             height: 60px;
             width: 60px;
         }
-        
+
         #profileNick {
             border: solid 1px black;
             width: 130px;
         }
-        
+
         .partyMember {
             display: flex;
             align-items: center;
         }
-        
+
         .partyMemberIcon {
             margin: 20px;
             border: solid 1px black;
             height: 40px;
             width: 40px;
         }
-        
+
         .partyMemberNick {
             width: 130px;
             border: solid 1px black;
         }
-        
+
         .chatContainer {
             position: absolute;
             bottom: 40px;
             margin: 7px;
             background-color: #FFFFFF;
         }
-        
+
         #chatHistory {
             margin: 5px;
             height: 400px;
@@ -154,25 +154,25 @@
             border: solid 1px black;
             overflow-y: scroll;
         }
-        
+
         #chatHistory::-webkit-scrollbar {
             opacity: 0;
         }
-        
+
         #partyList {
             height: 320px;
             overflow-y: scroll;
         }
-        
+
         #partyList::-webkit-scrollbar {
             opacity: 0;
             width: 0px;
         }
-        
+
         .inputField {
             margin: 5px;
         }
-        
+
         .div3 {
             grid-area: 1 / 5 / 6 / 6;
             width: 250px;
@@ -180,7 +180,7 @@
             display: flex;
             justify-content: center;
         }
-        
+
         #masterCommands {
             display: flex;
             flex-wrap: wrap;
@@ -192,12 +192,12 @@
             border-radius: 20px;
             margin-top: 30px;
         }
-        
+
         #masterCommands input {
             margin: 5px;
             width: 120px;
         }
-        
+
         .tokenContainer {
             position: absolute;
             bottom: 40px;
@@ -210,17 +210,17 @@
             background-color: #222222;
             overflow-y: scroll;
         }
-        
+
         #tokenContainer::-webkit-scrollbar {
             opacity: 0;
             width: 0px;
         }
-        
+
         .tokenContainer .draggable:not(.draggable:last-child) {
             border: none;
             margin-bottom: 10px;
         }
-        
+
         #addToken {
             display: flex;
             justify-content: center;
@@ -231,18 +231,18 @@
             height: 60px;
             background-color: #95A3B3;
         }
-        
+
         #trashToken {
             display: flex;
             justify-content: center;
             align-items: center;
             position: absolute;
-            top: 340px;
+            top: 385px;
             width: 60px;
             height: 60px;
             background-color: #95A3B3;
         }
-        
+
         .backgroundChanger {
             display: flex;
             flex-direction: column;
@@ -250,14 +250,33 @@
             justify-content: center;
             padding: 15px;
             position: absolute;
-            top: 200px;
+            top: 180px;
             height: 60px;
             width: 195px;
             border-radius: 20px;
             background-color: #222222;
         }
-        
+
         .backgroundChanger input {
+            margin: 3px;
+            width: 120px;
+        }
+
+        .gameSaver {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            position: absolute;
+            top: 280px;
+            height: 60px;
+            width: 195px;
+            border-radius: 20px;
+            background-color: #222222;
+        }
+
+        .gameSaver input {
             margin: 3px;
             width: 120px;
         }
@@ -265,108 +284,120 @@
 </head>
 
 <body>
-    <div class="content">
+<div class="content">
 
 
-        <div id="separator" style="z-index: 0;"></div>
-        <div id="containerGame" style="z-index: -1; opacity: 0; position: absolute">
-            <div class="parent">
-                <div class="div1">
-                    <div id="profile">
-                        <div id="profileIcon">
-
-                        </div>
-                        <div id="profileNick">
-                            My nickname!
-                        </div>
-                    </div>
-                    <div id="partyList">
+    <div id="separator" style="z-index: 0;"></div>
+    <div id="containerGame" style="z-index: -1; opacity: 0; position: absolute">
+        <div class="parent">
+            <div class="div1">
+                <div id="profile">
+                    <div id="profileIcon">
 
                     </div>
-                    <div class="chatContainer">
-                        <div id="chatHistory">
-                            <div style="color: gray;">
-                                Diceroll example: /d20 + 4
-                            </div>
-                            <div style="color: gray;">
-                                Diceroll example: /D6 - 1
-                            </div>
-                        </div>
-                        <div class="inputField">
-                            <input type="text" id="textField">
-                            <input type="submit" id="sendText" value="send">
-                        </div>
+                    <div id="profileNick">
+                        My nickname!
                     </div>
                 </div>
-                <div class="div2">
-                    <div class="leftboard">
+                <div id="partyList">
 
+                </div>
+                <div class="chatContainer">
+                    <div id="chatHistory">
+                        <div style="color: gray;">
+                            Diceroll example: /d20 + 4
+                        </div>
+                        <div style="color: gray;">
+                            Diceroll example: /D6 - 1
+                        </div>
                     </div>
-                    <img src="https://drive.google.com/uc?id=1BikKIYHCBekWwzU1u8ydPy2629mFH_1j" id="backgroundImage" style="height:650px; width:1300px; position: absolute; top: 100px; left: 300px;">
-                    <div class="gameboard">
-
-                    </div>
-                    <div class="rightboard">
-
+                    <div class="inputField">
+                        <input type="text" id="textField">
+                        <input type="submit" id="sendText" value="send">
                     </div>
                 </div>
-                <div class="div3">
-                    <div id="masterCommands" style="opacity: 0;">
-                        <input type="button" id="small" value="small">
-                        <input type="button" id="medium" value="medium">
-                        <input type="button" id="large" value="large">
-                        <input type="button" id="mHexa" value="hexagon">
-                    </div>
-                    <div class="backgroundChanger">
-                        <input type="text" id="urlInput" placeholder="Insert image url..." style="width: 150px;">
-                        <input type="button" id="urlSubmitBg" value="new Background">
-                        <input type="button" id="urlSubmitToken" value="new Token">
-                    </div>
+            </div>
+            <div class="div2">
+                <div class="leftboard">
 
-                    <div id="trashToken">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" style="height: 40px; width:40px;">
-                    </div>
+                </div>
+                <img src="https://drive.google.com/uc?id=1BikKIYHCBekWwzU1u8ydPy2629mFH_1j" id="backgroundImage"
+                     style="height:650px; width:1300px; position: absolute; top: 100px; left: 300px;">
+                <div class="gameboard">
 
-                    <div class="tokenContainer" id="tokenContainer">
-
-                    </div>
-
+                </div>
+                <div class="rightboard">
 
                 </div>
             </div>
-            <a href="https://drive.google.com/drive" target="_blank">Load your images here to get their direct link</a>
-            <div id="roomInfo"></div>
+            <div class="div3">
+                <div id="masterCommands" style="opacity: 0;">
+                    <input type="button" id="small" value="small">
+                    <input type="button" id="medium" value="medium">
+                    <input type="button" id="large" value="large">
+                    <input type="button" id="mHexa" value="hexagon">
+                </div>
+                <div class="backgroundChanger">
+                    <input type="text" id="urlInput" placeholder="Insert image url..." style="width: 150px;">
+                    <input type="button" id="urlSubmitBg" value="new Background">
+                    <input type="button" id="urlSubmitToken" value="new Token">
+                </div>
+
+                <div class="gameSaver">
+                    <input type="button" id="saveButton" value="Save Game">
+                    <input type="file" id="loadButton" value="Load Game">
+                </div>
+
+                <div id="trashToken">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
+                         style="height: 40px; width:40px;">
+                </div>
+
+                <div class="tokenContainer" id="tokenContainer">
+
+                </div>
+
+
+            </div>
         </div>
+        <a href="https://drive.google.com/drive" target="_blank">Load your images here to get their direct link</a>
+        <div id="roomInfo"></div>
+    </div>
 
-        <div id="containerLogin" style="z-index: 1; opacity: 1; position: absolute;">
-            <div class="forms">
-                <div>
-                    Create game
-                </div>
-                <hr> nickname <br>
-                <input type="text" id="createNick">
-                <hr> room Password <br>
-                <input type="text" id="createPW">
-                <hr>
-                <input type="submit" id="submitCreate">
-                <hr>
-                <div id="report"></div>
+    <div id="containerLogin" style="z-index: 1; opacity: 1; position: absolute;">
+        <div class="forms">
+            <div>
+                Create game
             </div>
-            <div class="forms">
-                <div>
-                    Join game
-                </div>
-                <hr> nickname <br>
-                <input type="text" id="joinNick">
-                <hr> room ID <br>
-                <input type="number" id="roomID">
-                <hr> room Password <br>
-                <input type="text" id="roomPW">
-                <hr>
-                <input type="submit" id="submitJoin">
+            <hr>
+            nickname <br>
+            <input type="text" id="createNick">
+            <hr>
+            room Password <br>
+            <input type="text" id="createPW">
+            <hr>
+            <input type="submit" id="submitCreate">
+            <hr>
+            <div id="report"></div>
+        </div>
+        <div class="forms">
+            <div>
+                Join game
             </div>
+            <hr>
+            nickname <br>
+            <input type="text" id="joinNick">
+            <hr>
+            room ID <br>
+            <input type="number" id="roomID">
+            <hr>
+            room Password <br>
+            <input type="text" id="roomPW">
+            <hr>
+            <input type="submit" id="submitJoin">
         </div>
     </div>
+</div>
 </body>
 <script>
     const driveport = "https://drive.google.com/uc?id=";
@@ -379,7 +410,7 @@
         } else return "invalidURL"
         if (split1[1] != undefined) {
             split2 = split1[1].split("/view?");
-        } else return "invalidURL"
+        } else return "invalidURdL"
 
         return split2[0];
     }
@@ -401,6 +432,7 @@
     const roomInfo = document.getElementById("roomInfo");
 
     const masterCommands = document.getElementById("masterCommands");
+
     const setProfile = (pack) => {
         masterCommands.style.opacity = 1;
         profileNick.innerText = createNick.value;
@@ -442,7 +474,6 @@
         partyMember.append(partyMemberNick);
         partyList.append(partyMember);
     }
-
 
 
     const placeText = (pack) => {
@@ -520,6 +551,13 @@
                 }
                 break;
             case "notifyPlaceToken":
+                //TODO:
+                let tokenID = -1;
+                if (pack.length <= 5) {
+                    tokenID = tokenInfoList.size;
+                    tokenInfoList.set(tokenID, new TokenInfo(pack[3], Number(pack[1]), Number(pack[2])));
+                }
+
                 let givenTilePos = 1;
                 if (horizontalTiles != "Hexa") {
                     givenTilePos = (parseInt(pack[1]) * horizontalTiles) + parseInt(pack[2]);
@@ -538,12 +576,12 @@
                 if (pack.length > 5) {
 
                     let prevPos = 1;
-                    if (horizontalTiles != "Hexa") {
+                    if (horizontalTiles !== "Hexa") {
                         prevPos = (parseInt(pack[4]) * horizontalTiles) + parseInt(pack[5]);
 
                     } else {
                         for (let i = 0; i < parseInt(pack[4]); i++) {
-                            if (i % 2 == 0) {
+                            if (i % 2 === 0) {
                                 prevPos = prevPos + 20;
                             } else {
                                 prevPos = prevPos + 21;
@@ -552,20 +590,34 @@
                         prevPos = prevPos + parseInt(pack[5])
                     }
 
+                    //Find the token according to the given position
+                    let tokenIndex;
+                    tokenInfoList.forEach((value, key) => {
+                        if (value.tokenPositionX === pack[4] && value.tokenPositionY === pack[5]) {
+                            tokenIndex = key;
+                        }
+                    });
+                    tokenID = tokenIndex;
+                    //Change the token position in the list
+                    let tokenInfo = tokenInfoList.get(tokenIndex);
+                    tokenInfo.tokenPositionX = pack[1];
+                    tokenInfo.tokenPositionY = pack[2];
 
                     gameboard.children[prevPos].children[0].remove();
                 }
 
                 let givenTokenPos = pack[3];
                 let givenToken = tokencontainer.children[givenTokenPos];
+                givenToken.id = tokenID.toString();
 
                 givenTile.append(givenToken);
 
                 refreshToken();
                 break;
             case "notifyRemoveToken":
-                let j = parseInt(pack[1]);
-                let i = parseInt(pack[2]);
+                //TODO:
+                let j = parseInt(pack[1]);//row
+                let i = parseInt(pack[2]);//column
                 let pos = 0;
                 if (horizontalTiles === "Hexa") {
                     for (let k = 0; k < j; k++) {
@@ -579,14 +631,25 @@
                 } else {
                     pos = (j * horizontalTiles) + i;
                 }
+                let tokenIndex = -1;
+                tokenInfoList.forEach((value, key) => {
+                    if (value.tokenPositionX === pack[1] && value.tokenPositionY === pack[2]) {
+                        tokenIndex = key;
+                    }
+                });
+                tokenInfoList.delete(tokenIndex);
                 gameboard.children[pos].children[0].remove();
                 break;
+            case "notifyLoadGame":
+                tokenArray.splice(7, tokenArray.length);
+                break;
             case "notifyNewBG":
+                currentBackgroundUrl = pack[1];
                 backgroundImage.src = pack[1];
                 break;
             case "notifyNewToken":
+                //TODO: modified
                 updateTokens(pack[1]);
-                2
                 break;
             case "wrongPW":
                 break;
@@ -612,6 +675,7 @@
             if (imgID == "invalidURL") {
                 urlInput.value = "invalid URL";
             } else {
+                currentBackgroundUrl = "https://drive.google.com/uc?id=" + imgID;
                 backgroundImage.src = "https://drive.google.com/uc?id=" + imgID;
                 let pack = ["newBG", backgroundImage.src]
                 ws.send(pack);
@@ -633,8 +697,6 @@
             }
         }
     })
-
-
 
     submitCreate.addEventListener("click", () => {
         let nick = createNick.value;
@@ -667,29 +729,32 @@
     var tokenSize = "65px";
 
     const largeFun = () => {
+        currentGrid = "L";
         generate(10, 5, 130);
         horizontalTiles = 10;
         tokenSize = "80px";
         refreshToken();
     }
     largecheck.addEventListener("click", () => {
-        largeFun()
+        largeFun();
         const pack = ["changeSize", "L"];
         ws.send(pack)
     });
     const mediumFun = () => {
+        currentGrid = "M";
         generate(20, 10, 65);
         tokenSize = "65px";
         horizontalTiles = 20;
         refreshToken();
     }
     mediumcheck.addEventListener("click", () => {
-        mediumFun()
+        mediumFun();
         const pack = ["changeSize", "M"];
         ws.send(pack)
 
     });
     const hexaFun = () => {
+        currentGrid = "H";
         generatehexa(20, 12, 65);
         horizontalTiles = "Hexa";
         tokenSize = "55px";
@@ -697,11 +762,13 @@
     }
 
     mediumhexa.addEventListener("click", () => {
+        hexaFun();
         const pack = ["changeSize", "H"];
         ws.send(pack)
 
     });
     const smallFun = () => {
+        currentGrid = "S";
         horizontalTiles = 40;
         generate(40, 20, 32.5);
         tokenSize = "32.5px";
@@ -709,11 +776,11 @@
     }
 
     smallcheck.addEventListener("click", () => {
+        smallFun();
         const pack = ["changeSize", "S"];
         ws.send(pack)
 
     });
-
 
 
     const generate = (x, y, size) => {
@@ -782,9 +849,10 @@
         while (gameboard.childElementCount > 0) {
             gameboard.lastChild.remove();
         }
+        tokenInfoList.clear();
     }
 
-    const tokenArray = new Array();
+    let tokenArray = new Array();
     const initiateTokens = () => {
         tokenArray.push("https://drive.google.com/uc?id=1K8IdZ-9N-ynnzOR7bvJEh2-hrfQLj-KK");
         tokenArray.push("https://drive.google.com/uc?id=1LnoHwDIkIcOR5paBDz91i9s_qNuZYLmD");
@@ -829,6 +897,7 @@
                 } else {
                     currentTokenPlace = null;
                 }
+
             })
 
             token.addEventListener('dragend', () => {
@@ -841,7 +910,7 @@
     refreshToken();
 
     const trashToken = document.getElementById("trashToken");
-    var currentTokenPlace;
+    let currentTokenPlace;
     trashToken.addEventListener('dragover', e => {
         e.preventDefault()
 
@@ -849,6 +918,11 @@
     trashToken.addEventListener('drop', e => {
         e.preventDefault()
         const draggable = document.querySelector('.dragging')
+
+        //Delete token from save data
+        let index = parseInt(draggable.id);
+        tokenInfoList.delete(index);
+
         ws.send(["removeToken", draggable.parentNode.value])
 
         draggable.remove();
@@ -865,9 +939,25 @@
         containers.forEach(container => {
             container.addEventListener('drop', e => {
                 e.preventDefault()
-                const draggable = document.querySelector('.dragging')
+                const draggable = document.querySelector('.dragging');
                 if (container.children.length < 1) {
-                    container.appendChild(draggable)
+                    container.appendChild(draggable);
+
+                    //let tokenBGUrl = draggable.style.backgroundImage.substring(5, draggable.style.backgroundImage.length - 1);
+                    let index = draggable.id === "" ? tokenInfoList.size : parseInt(draggable.id);
+                    let positions = container.value.split(",");
+                    let x = parseInt(positions[0]);
+                    let y = parseInt(positions[1]);
+
+                    if (!tokenInfoList.has(index)) {
+                        tokenInfoList.set(index, new TokenInfo(draggable.value, x, y));
+                    } else {
+                        tokenInfoList.get(index).positionX = x;
+                        tokenInfoList.get(index).positionY = y;
+                    }
+                    //Map token id to tokenInfoList index
+                    draggable.id = index.toString();
+
                     let pack = ["placeToken", container.value, draggable.value, currentTokenPlace]
                     ws.send(pack)
 
@@ -882,8 +972,6 @@
     let profileIconValue = profileIcon.value;
     profileIcon.style.backgroundImage = "url(" + tokenArray[profileIconValue] + ")";
     profileIcon.style.backgroundSize = "60px 60px";
-
-
 
 
     profileIcon.addEventListener("click", () => {
@@ -920,13 +1008,222 @@
     }
 
     const showLogin = () => {
-            hideall();
+        hideall();
 
-            loginContainer.style.opacity = 1;
-            loginContainer.style.zIndex = 1;
+        loginContainer.style.opacity = 1;
+        loginContainer.style.zIndex = 1;
 
+    }
+    //showGame();
+
+    const saveButton = document.getElementById("saveButton");
+    const loadButton = document.getElementById("loadButton");
+
+    saveButton.addEventListener("click", () => {
+        saveGame();
+    });
+
+    const saveGame = () => {
+        //TODO:elaborate game save
+        let saveData = new SaveData(tokenArray, tokenInfoList, currentGrid, currentBackgroundUrl);
+        let jsonString = JSON.stringify(saveData, replacer);
+        let blob = new Blob([jsonString], {type: "application/json"});
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        let date = new Date().toDateString();
+        let fileName = "save" + date + ".json";
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    /**
+     * Replacer function for JSON.stringify
+     * @param key {string}
+     * @param value {*}
+     * @returns {*|{dataType: string, value: [unknown, unknown][]}}
+     */
+    function replacer(key, value) {
+        if (value instanceof Map) {
+            return {
+                dataType: 'Map',
+                value: Array.from(value.entries()), // or with spread: value: [...value]
+            };
+        } else {
+            return value;
         }
-        //showGame();
+    }
+
+    loadButton.addEventListener("change", () => {
+        loadGame(event);
+    });
+
+    function loadGame(event) {
+        let e = window.event || event;
+        let savedFile = e.target.files[0];
+        let fileReader = new FileReader();
+        fileReader.readAsText(savedFile);
+        fileReader.onload = (event) => {
+            let jsonString = event.target.result.toString();
+            let saveData = JSON.parse(jsonString, reviver);
+            rebuildGame(saveData);
+        }
+        //TODO: read save data
+        //TODO: clear the board before loading
+    }
+
+    /**
+     * Reviver function for JSON.parse
+     * @param key {string}
+     * @param value {*}
+     * @returns {Map<unknown, unknown>|*}
+     */
+    function reviver(key, value) {
+        if (typeof value === 'object' && value !== null) {
+            if (value.dataType === 'Map') {
+                return new Map(value.value);
+            }
+        }
+        return value;
+    }
+
+    async function readFile(file) {
+        const response = await fetch(file);
+        const text = await response.text();
+        return text;
+    }
+
+    function rebuildGame(saveData) {
+        let tokenInfoMap = saveData.tokenInfoList;
+        let tokenArray = saveData.tokenArray;
+        let gridFormat = saveData.gridFormat;
+        let backgroundUrl = saveData.backgroundUrl;
+
+        let pack = ["loadGame"];
+        ws.send(pack);
+        updateBGWithOriginalURL(backgroundUrl)
+        updateGrid(gridFormat);
+        rebuildTokenArray(tokenArray);
+        rebuildTokenPos(tokenInfoMap);
+    }
+
+    function rebuildTokenPos(tokenInfoMap) {
+        tokenInfoList = tokenInfoMap;
+        tokenInfoList.forEach((value, key) => {
+            let x = Number(value.tokenPositionX);
+            let y = Number(value.tokenPositionY);
+
+            let givenTilePos = 1;
+            if (horizontalTiles != "Hexa") {
+                givenTilePos = (x * horizontalTiles) + y;
+
+            } else {
+                for (let i = 0; i < x; i++) {
+                    if (i % 2 == 0) {
+                        givenTilePos = givenTilePos + 20;
+                    } else {
+                        givenTilePos = givenTilePos + 21;
+                    }
+                }
+                givenTilePos = givenTilePos + y
+            }
+            let givenTile = gameboard.children[givenTilePos];
+
+            let givenTokenPos = value.tokenIndex;
+            let givenToken = tokencontainer.children[givenTokenPos];
+            givenToken.id = key.toString();
+
+            givenTile.append(givenToken);
+
+            refreshToken();
+
+            let coordinate = x.toString() + ',' + y.toString();
+            let pack = ["placeToken", coordinate, value.tokenIndex, key.toString()]
+            ws.send(pack)
+        })
+    }
+
+    function updateBG(bgUrl) {
+        urlInput.value = bgUrl;
+        urlSubmitBg.click();
+    }
+
+    function rebuildTokenArray(newTokenArray) {
+        tokenArray.splice(7, tokenArray.length);
+        for (let i = 7; i < newTokenArray.length; i++) {
+            updateTokenWithOriginalURL(newTokenArray[i]);
+        }
+        urlInput.value = "";
+        refreshToken();
+    }
+
+    function updateTokenWithOriginalURL(url) {
+        if (url != "") {
+            updateTokens(url)
+            let pack = ["newToken", url]
+            ws.send(pack);
+        }
+    }
+
+    function updateBGWithOriginalURL(url) {
+        if (url === "")
+            return;
+        currentBackgroundUrl = url;
+        backgroundImage.src = url;
+        let pack = ["newBG", backgroundImage.src]
+        ws.send(pack);
+        urlInput.value = "";
+    }
+
+    function updateGrid(grid) {
+        let pack;
+        switch (grid) {
+            case "L":
+                largeFun();
+                pack = ["changeSize", "L"];
+                ws.send(pack);
+                break;
+            case "M":
+                mediumFun();
+                pack = ["changeSize", "M"];
+                ws.send(pack);
+                break;
+            case "H":
+                hexaFun();
+                pack = ["changeSize", "H"];
+                ws.send(pack);
+                break;
+            case "S":
+                smallFun();
+                pack = ["changeSize", "S"];
+                ws.send(pack);
+                break;
+        }
+    }
+
+    class TokenInfo {
+
+        constructor(tokenIndex, tokenPositionX, tokenPositionY) {
+            this.tokenIndex = tokenIndex;
+            this.tokenPositionX = tokenPositionX;
+            this.tokenPositionY = tokenPositionY;
+        }
+    }
+
+    let currentGrid = "";
+    let currentBackgroundUrl = "https://drive.google.com/file/d/1hDirfbQDTAkJMZjQDVCNqqY0PDEhu4pY/view?usp=sharing";
+    let tokenInfoList = new Map();
+
+    class SaveData {
+        constructor(tokenArray, tokenInfoList, gridFormat, backgroundUrl) {
+            this.tokenInfoList = tokenInfoList;
+            this.tokenArray = tokenArray;
+            this.gridFormat = gridFormat;
+            this.backgroundUrl = backgroundUrl;
+        }
+    }
+
 </script>
 
 </html>

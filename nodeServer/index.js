@@ -1,12 +1,12 @@
 const WebSocket = require("ws");
 
-const wss = new WebSocket.Server({ port: 3000 });
+const wss = new WebSocket.Server({port: 3000});
 
 const wsmap = new Map();
 const allRooms = new Map();
 const party = new Map();
 const freeRooms = new Array();
-var numberOfRooms = 1000;
+let numberOfRooms = 1000;
 
 console.log("server running");
 
@@ -15,7 +15,7 @@ function tellEverybody() {
 }
 
 wss.on("connection", ws => {
-    const user = { "nick": "", "room": "" };
+    const user = {"nick": "", "room": ""};
     let logged = false;
     let master = false;
     console.log("new client connected");
@@ -75,7 +75,7 @@ wss.on("connection", ws => {
 
                     Array.from(party.get(user.room)).forEach((person) => {
 
-                        let peer = { "nick": "", "room": "" };
+                        let peer = {"nick": "", "room": ""};
                         peer.nick = person;
                         peer.room = user.room;
 
@@ -108,7 +108,7 @@ wss.on("connection", ws => {
                 }
                 Array.from(party.get(user.room)).forEach((person) => {
 
-                    let peer = { "nick": "", "room": "" };
+                    let peer = {"nick": "", "room": ""};
                     peer.nick = person;
                     peer.room = user.room;
 
@@ -133,7 +133,7 @@ wss.on("connection", ws => {
 
                 Array.from(party.get(user.room)).forEach((person) => {
 
-                    let peer = { "nick": "", "room": "" };
+                    let peer = {"nick": "", "room": ""};
                     peer.nick = person;
                     peer.room = user.room;
 
@@ -144,18 +144,18 @@ wss.on("connection", ws => {
             case "changeSize":
                 Array.from(party.get(user.room)).forEach((person) => {
 
-                    let peer = { "nick": "", "room": "" };
+                    let peer = {"nick": "", "room": ""};
                     peer.nick = person;
                     peer.room = user.room;
-
-                    wsmap.get(peer.nick + ", " + peer.room).send("notifyChangeSize," + pack[1]);
-
+                    if (peer.nick !== user.nick) {
+                        wsmap.get(peer.nick + ", " + peer.room).send("notifyChangeSize," + pack[1]);
+                    }
                 });
                 break;
             case "placeToken":
                 Array.from(party.get(user.room)).forEach((person) => {
 
-                    let peer = { "nick": "", "room": "" };
+                    let peer = {"nick": "", "room": ""};
                     peer.nick = person;
                     peer.room = user.room;
                     if (peer.nick !== user.nick) {
@@ -173,7 +173,7 @@ wss.on("connection", ws => {
             case "removeToken":
                 Array.from(party.get(user.room)).forEach((person) => {
 
-                    let peer = { "nick": "", "room": "" };
+                    let peer = {"nick": "", "room": ""};
                     peer.nick = person;
                     peer.room = user.room;
                     if (peer.nick !== user.nick)
@@ -184,7 +184,7 @@ wss.on("connection", ws => {
             case "newBG":
                 Array.from(party.get(user.room)).forEach((person) => {
 
-                    let peer = { "nick": "", "room": "" };
+                    let peer = {"nick": "", "room": ""};
                     peer.nick = person;
                     peer.room = user.room;
                     if (peer.nick !== user.nick)
@@ -195,12 +195,21 @@ wss.on("connection", ws => {
             case "newToken":
                 Array.from(party.get(user.room)).forEach((person) => {
 
-                    let peer = { "nick": "", "room": "" };
+                    let peer = {"nick": "", "room": ""};
                     peer.nick = person;
                     peer.room = user.room;
                     if (peer.nick !== user.nick)
                         wsmap.get(peer.nick + ", " + peer.room).send("notifyNewToken," + pack[1]);
 
+                });
+                break;
+            case "loadGame":
+                Array.from(party.get(user.room)).forEach((person) => {
+                    let peer = {"nick": "", "room": ""};
+                    peer.nick = person;
+                    peer.room = user.room;
+                    if (peer.nick !== user.nick)
+                        wsmap.get(peer.nick + ", " + peer.room).send("notifyLoadGame");
                 });
                 break;
         }
@@ -217,7 +226,7 @@ wss.on("connection", ws => {
 
             Array.from(party.get(user.room)).forEach((person) => {
 
-                let peer = { "nick": "", "room": "" };
+                let peer = {"nick": "", "room": ""};
                 peer.nick = person;
                 peer.room = user.room;
 
@@ -234,8 +243,9 @@ wss.on("connection", ws => {
                 party.delete(user.room);
             }
         }
-        wsmap.delete(user.nick + ", " + user.room, ws);
-
+        //wsmap.delete(user.nick + ", " + user.room, ws);
+        wsmap.delete(user.nick + ", " + user.room);
 
     });
-});
+})
+;
