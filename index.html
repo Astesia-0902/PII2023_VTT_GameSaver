@@ -1153,6 +1153,12 @@
 
             let givenTokenPos = value.tokenIndex;
             let givenToken = tokencontainer.children[givenTokenPos];
+
+            if(givenToken == null){
+                console.log("Invalid save file: token not found");
+                return;
+            }
+
             givenToken.id = key.toString();
 
             givenTile.append(givenToken);
@@ -1171,11 +1177,11 @@
     }
 
     function rebuildTokenArray(newTokenArray) {
+        tokenArray.splice(7, tokenArray.length);
         if (newTokenArray.length < 7) {
             console.log("Invalid save file: not enough tokens");
             return;
         }
-        tokenArray.splice(7, tokenArray.length);
         for (let i = 7; i < newTokenArray.length; i++) {
             updateTokenWithOriginalURL(newTokenArray[i]);
         }
